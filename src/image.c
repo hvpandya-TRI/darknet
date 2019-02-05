@@ -546,7 +546,6 @@ void show_image_cv(image p, const char *name, IplImage *disp, bool enable_opencv
     sprintf(buff, "%s", name);
 
     int step = disp->widthStep;
-    //cvNamedWindow(buff, CV_WINDOW_NORMAL);
     //cvMoveWindow(buff, 100*(windows%10) + 200*(windows/10), 100*(windows%10));
     ++windows;
     for(y = 0; y < p.h; ++y){
@@ -570,6 +569,7 @@ void show_image_cv(image p, const char *name, IplImage *disp, bool enable_opencv
     }
     if(enable_opencv_window)
     {
+      cvNamedWindow(buff, CV_WINDOW_NORMAL);
       cvShowImage(buff, disp);
     }
 }
@@ -581,7 +581,7 @@ void show_image(image p, const char *name)
     IplImage *disp = cvCreateImage(cvSize(p.w,p.h), IPL_DEPTH_8U, p.c);
     image copy = copy_image(p);
     constrain_image(copy);
-    show_image_cv(copy, name, disp);
+    show_image_cv(copy, name, disp, true);
     free_image(copy);
     cvReleaseImage(&disp);
 #else
